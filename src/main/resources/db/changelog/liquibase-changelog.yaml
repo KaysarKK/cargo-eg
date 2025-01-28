@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Kaisar K
+      changes:
+        - sqlFile:
+            path: 2025-01-26-initial-schema.sql
+            relativeToChangelogFile: true
+            splitStatements: false

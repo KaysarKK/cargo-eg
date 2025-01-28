@@ -1,0 +1,83 @@
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    application:
+        name: cargo-eg
+    datasource:
+        url: jdbc:h2:mem:testdb # ???? ?????? ? ?????? (???????? ?? jdbc:h2:file:~/testdb ??? ????????)
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+    h2:
+        console:
+            enabled: true          # ????????? ??????? H2
+            path: /h2-console      # URL ??? ??????? ? ???????
+    #    datasource:
+#        url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/cargo_eg_service}
+#        driver-class-name: org.postgresql.Driver
+#        username: ${POSTGRES_USER:postgres}
+#        password: ${POSTGRES_PASSWORD:postgres}
+    liquibase:
+        changeLog: db/changelog/liquibase-changelog.yaml
+        enabled: true
+    cloud:
+        kubernetes:
+            discovery:
+                enabled: false
+            enabled: false
+    mvc:
+        async:
+            request-timeout: 1800000
+        pathmatch:
+            matching-strategy: ant_path_matcher
+        cloud:
+            loadbalancer:
+                enabled: true
+            kubernetes:
+                enabled: false
+                config:
+                    enabled: false
+            config:
+                enabled: false
+        devtools:
+            livereload:
+                enabled: false
+    data:
+        jpa:
+            repositories:
+                bootstrap-mode: deferred
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: validate
+        properties:
+            hibernate:
+                temp:
+                    use_jdbc_metadata_defaults: false
+        show-sql: false
+    servlet:
+        multipart:
+            enabled: true
+            file-size-threshold: 2KB
+            max-file-size: 50MB
+            max-request-size: 10MB
+    logging:
+        level:
+            kz.kazdream.berkut: DEBUG
+    jackson:
+        mapper:
+            DEFAULT_VIEW_INCLUSION: true
+management:
+    endpoint:
+        restart:
+            enabled: true
+logging_path: /tmp/logs
+base-upload-folder: /tmp/photos
+upload-images-max-size-mb: 5120
+integration:
+    translate:
+        service-name: translation-service
+        url: http://
+server:
+    servlet:
+        context-path: /cargo-eg-service
